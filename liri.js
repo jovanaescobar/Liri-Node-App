@@ -9,14 +9,21 @@ const axios = require('axios');
 // Make a request for a user with a given ID
 axios.get('http://www.omdbapi.com/?t=titanic&apikey=817f7d4f')
   .then(function (response) {
-    // handle success
+    // display retrieved movie info from movie database
     console.log(response);
     console.log(response.data.Title); 
-    // console.log(response.data.Year);
-    // console.log(response.data.Year);
-    // console.log(response.data.Year);
-    // console.log(response.data.Year);
+    console.log(response.data.Year);
+    console.log(response.data.imdbRating);
+    console.log(response.data.Ratings[1]);
+    console.log(response.data.Country);
+    console.log(response.data.Language);
+    console.log(response.data.Plot);
+    console.log(response.data.Actors);
   })
+
+
+
+
   .catch(function (error) {
     // handle error
     console.log(error);
@@ -47,7 +54,7 @@ spotify.search({ type: 'track', query: process.argv[3] }, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-//  display artist name from spotify data base 
+//  display artist info from spotify data base 
   console.log(data.tracks.items[0].artists[0].name); 
   console.log(process.argv[3]);
   console.log(data.tracks.items[0].external_urls.spotify); 
