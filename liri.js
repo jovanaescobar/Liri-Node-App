@@ -1,77 +1,86 @@
 require("dotenv").config();
-
 var keys = require("./keys.js");
-
-// request info from API 
+// request info from API's
 const axios = require('axios');
-
- 
-// Make a request for a user with a given ID
-axios.get('http://www.omdbapi.com/?t=titanic&apikey=817f7d4f')
-  .then(function (response) {
-    // display retrieved movie info from movie database
-    console.log(response);
-    console.log(response.data.Title); 
-    console.log(response.data.Year);
-    console.log(response.data.imdbRating);
-    console.log(response.data.Ratings[1]);
-    console.log(response.data.Country);
-    console.log(response.data.Language);
-    console.log(response.data.Plot);
-    console.log(response.data.Actors);
-  })
-
-
-
-
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  .finally(function () {
-    // always executed
-  });
-
-//   to just rerun code above 
-return 
-
-
-
-
-// SPOTIFY DOWN HERE 
-
-// request info from API 
 var Spotify = require('node-spotify-api');
-
 var spotify = new Spotify(keys.spotify);
+var fs = require('fs');
+// user request for input
+var command;
+// name of titles user is searching
+var input;
+var noTxtFile = true;
 
 
+if(process.argv[2] == "do-what-it-says"){
+    noTxtFile = false;
+    //get input from txt file
+      fs.readFile('random.txt', 'utf8',(err, data) => {
+        if(err) throw err;
+       // assign values from txt file
+        var x = data.split(',');
+        command = x[0];
+        input = x[1];
+        otherApis();
+      });
 
-// process.argv is now equal to spotify this song which is the command line -- creating if statement if user tiypes command line run this request
-if(process.argv[2] == "spotify-this-song"){
-// got from spotify site
-spotify.search({ type: 'track', query: process.argv[3] }, function(err, data) {
+    } else{
+        //Run other command options if "do-what-it-says" is not requested
+         command = process.argv[2];
+        //Run search for song or movie title inputs  
+         input = process.argv[3];
+         otherApis();
+    }
+
+
+function otherApis(){
+//process.argv is now equal to spotify this song
+if(command == "spotify-this-song"){
+//?????????? needs fruthers explanation
+
+     if( (noTxtFile && process.argv.length < 4 ) || input.length == 0){
+//give The Sign Info if no input is added to "spotify-this-song"
+        input = "The Sign";
+    }
+//from spotify site
+spotify.search({ type: 'track', query: input }, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
-//  display artist info from spotify data base 
+//retrieve info from spotify 
   console.log(data.tracks.items[0].artists[0].name); 
-  console.log(process.argv[3]);
+  console.log(input);
   console.log(data.tracks.items[0].external_urls.spotify); 
   console.log(data.tracks.items[0].album.name);
 
   });
+ } else if(command == "movie-this"){
+    if( (noTxtFile && process.argv.length < 4 ) || input.length == 0){
+        input = "Mr.Nobody";
     }
+// Request info for input from API with APIkey located in .env
+axios.get("http://www.omdbapi.com/?t=" + input + "&apikey=" + process.env.IMDB_KEY)
+.then(function (response) {
 
-//   console.log(process.argv[2]);
-//   console.log(process.argv[3]);
 
+//retrieve movie info 
+  console.log(response);
+  console.log(response.data.Title); 
+  console.log(response.data.Year);
+  console.log(response.data.imdbRating);
+  console.log(response.data.Ratings[1]);
+  console.log(response.data.Country);
+  console.log(response.data.Language);
+  console.log(response.data.Plot);
+  console.log(response.data.Actors);
+})
+.catch(function (error) {
+// handle error
+  console.log(error);
+})
+.finally(function () {
+// always executed
+});
 
-//   process.argv  is the commands line 
-
-//   example (node liri.js spotify-this-song "i kissed a girl")
-//   0- is Node
-//   1 - liri.js
-//   2 - 4 choice of api commands 
-//   3 - string that user is going to provide 
-
+}
+}
