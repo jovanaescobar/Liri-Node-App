@@ -6,17 +6,8 @@ In this assignment, LIRI was created. LIRI is like iPhone's SIRI. However, while
 
 # What Each Command Should Do
 
-1. `node liri.js concert-this <artist/band name here>`
 
-   * This will search the Bands in Town Artist Events API (`"https://rest.bandsintown.com/artists/" + Cher + "/events?app_id=codingbootcamp"`) for an artist and render the following information about each event to the terminal:
-
-     * Name of the venue
-
-     * Venue location
-
-     * Date of the Event (use moment to format this as "MM/DD/YYYY")
-
-2. `node liri.js spotify-this-song '<song name here>'`
+1. `node liri.js spotify-this-song '<song name here>'`
 
    * This will show the following information about the song in your terminal/bash window
 
@@ -32,7 +23,7 @@ In this assignment, LIRI was created. LIRI is like iPhone's SIRI. However, while
 spotify-api).
 
 
-3. `node liri.js movie-this '<movie name here>'`
+2. `node liri.js movie-this '<movie name here>'`
 
    * This will output the following information to your terminal/bash window:
 
@@ -48,6 +39,3 @@ spotify-api).
      ```
 
    * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-
-
-4. `node liri.js do-what-it-says`
