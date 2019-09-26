@@ -35,4 +35,4 @@ In this assignment, LIRI was created. LIRI is like iPhone's SIRI. However, while
        * Actors in the movie.
      ```
 
-   * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+  * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
